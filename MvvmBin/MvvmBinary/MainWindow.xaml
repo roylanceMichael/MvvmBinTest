@@ -3,8 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:MvvmBinaryViewModel="clr-namespace:MvvmBinaryViewModel;assembly=MvvmBinaryViewModel"
         Title="Binary Tree" 
-        Height="768" 
-        Width="1024"
+        Height="480" 
+        Width="640"
+        MinHeight="480"
+        MinWidth="640"
         WindowStartupLocation="CenterScreen"
         Icon="./icons/binary-tree-icon.png">
     <Window.DataContext>
