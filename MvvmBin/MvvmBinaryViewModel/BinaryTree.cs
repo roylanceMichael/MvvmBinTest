@@ -141,29 +141,62 @@ namespace MvvmBinaryViewModel
             {
                 return true;
             }
+
             var queue = new Queue<Node>();
             queue.Enqueue(HeadNode);
             while (queue.Any())
             {
                 var current = queue.Dequeue();
+
                 if (current.LeftNode != null)
                 {
-                    if (current.LeftNode.CompareTo(current) >= 0)
+                    if (!CompareToEverythingOnLeft(current.LeftNode, current.Value))
                     {
                         return false;
                     }
                     queue.Enqueue(current.LeftNode);
                 }
-                else if (current.RightNode != null && current.RightNode.CompareTo(current) < 0)
+                if (current.RightNode != null)
                 {
-                    if (current.RightNode.CompareTo(current) > 0)
+                    if (!CompareToEverythingOnRight(current.RightNode, current.Value))
                     {
                         return false;
                     }
-                    queue.Enqueue(current.LeftNode);
+                    queue.Enqueue(current.RightNode);
                 }
             }
+
             return true;
+        }
+
+        private static bool CompareToEverythingOnLeft(Node node, int value)
+        {
+            if (node == null)
+            {
+                return true;
+            }
+            if (node.Value >= value)
+            {
+                return false;
+            }
+            var leftSide = CompareToEverythingOnLeft(node.LeftNode, value);
+            var rightSide = CompareToEverythingOnLeft(node.RightNode, value);
+            return leftSide && rightSide;
+        }
+
+        private static bool CompareToEverythingOnRight(Node node, int value)
+        {
+            if (node == null)
+            {
+                return true;
+            }
+            if (node.Value < value)
+            {
+                return false;
+            }
+            var leftSide = CompareToEverythingOnRight(node.LeftNode, value);
+            var rightSide = CompareToEverythingOnRight(node.RightNode, value);
+            return leftSide && rightSide;
         }
 
         public void AddDefaultTreeEntrance(object param)

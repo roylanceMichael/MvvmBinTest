@@ -244,6 +244,18 @@ namespace Tests
             }
 
             [TestMethod]
+            public void FailureWhenHeadRightChildLeftChildSmallerThanHead()
+            {
+                var vm = new BinaryTree();
+                var headNode = new Node { Value = 2 };
+                headNode.RightNode = new Node { Value = 3 };
+                //this should be head.left
+                headNode.RightNode.LeftNode = new Node { Value = 1 };
+                vm.HeadNode = headNode;
+                Assert.IsFalse(vm.IsThisBinaryTree());
+            }
+
+            [TestMethod]
             public void SuccessWhenBinarySearchTree()
             {
                 var vm = new BinaryTree();
