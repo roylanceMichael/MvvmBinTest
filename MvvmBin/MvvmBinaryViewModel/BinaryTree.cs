@@ -148,13 +148,13 @@ namespace MvvmBinaryViewModel
                 var current = queue.Dequeue();
                 if (current.LeftNode != null)
                 {
-                    if (current.LeftNode.CompareTo(current) > 0)
+                    if (current.LeftNode.CompareTo(current) >= 0)
                     {
                         return false;
                     }
                     queue.Enqueue(current.LeftNode);
                 }
-                else if (current.RightNode != null && current.RightNode.CompareTo(current) > 0)
+                else if (current.RightNode != null && current.RightNode.CompareTo(current) < 0)
                 {
                     if (current.RightNode.CompareTo(current) > 0)
                     {
