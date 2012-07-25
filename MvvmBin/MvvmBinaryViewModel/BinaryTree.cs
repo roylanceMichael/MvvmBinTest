@@ -34,6 +34,35 @@ namespace MvvmBinaryViewModel
         #endregion
 
         #region properties
+
+        private bool _toggle = true;
+        public bool SearchMethod
+        {
+            get { return _toggle; }
+            set
+            {
+                if (_toggle != value)
+                {
+                    _toggle = value;
+                    PropertyChanged(this, new PropertyChangedEventArgs("SearchMethod"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("BalancedMethod"));
+                }
+            }
+        }
+        public bool BalancedMethod
+        {
+            get { return !_toggle; }
+            set
+            {
+                if (_toggle == value)
+                {
+                    _toggle = !value;
+                    PropertyChanged(this, new PropertyChangedEventArgs("SearchMethod"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("BalancedMethod"));
+                }
+            }
+        }
+
         private DelegateCommand _addNodeCommand;
         public ICommand AddNodeCommand
         {
@@ -94,9 +123,49 @@ namespace MvvmBinaryViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs("HeadNode"));
             }
         }
+
+        public string IsBinarySearchTree
+        {
+            get
+            {
+                var result = IsThisBinaryTree();
+                return result ? "Binary Search!" : "NOT Binary Search!";
+            }
+        }
         #endregion
 
         #region functions
+        public bool IsThisBinaryTree()
+        {
+            if (HeadNode == null)
+            {
+                return true;
+            }
+            var queue = new Queue<Node>();
+            queue.Enqueue(HeadNode);
+            while (queue.Any())
+            {
+                var current = queue.Dequeue();
+                if (current.LeftNode != null)
+                {
+                    if (current.LeftNode.CompareTo(current) > 0)
+                    {
+                        return false;
+                    }
+                    queue.Enqueue(current.LeftNode);
+                }
+                else if (current.RightNode != null && current.RightNode.CompareTo(current) > 0)
+                {
+                    if (current.RightNode.CompareTo(current) > 0)
+                    {
+                        return false;
+                    }
+                    queue.Enqueue(current.LeftNode);
+                }
+            }
+            return true;
+        }
+
         public void AddDefaultTreeEntrance(object param)
         {
             //null out current header
@@ -107,8 +176,9 @@ namespace MvvmBinaryViewModel
 
             foreach (var node in NodeList)
             {
-                AddNode(node);
+                AddSearchNode(node);
             }
+            PropertyChanged(this, new PropertyChangedEventArgs("IsBinarySearchTree"));
         }
 
         public void RemoveNodeEntrance(object param)
@@ -123,12 +193,53 @@ namespace MvvmBinaryViewModel
         public void AddNodeEntrance(object param)
         {
             var newNode = new Node
+            {
+                Value = CurrentValue ?? 5,
+                IsExpanded = true,
+                IsSelected = true
+            };
+            if (SearchMethod)
+            {
+                AddSearchNode(newNode);
+            }
+            else
+            {
+                AddBalancedNode(newNode);
+            }
+
+            PropertyChanged(this, new PropertyChangedEventArgs("IsBinarySearchTree"));
+        }
+
+        public void AddBalancedNode(Node node)
+        {
+            if (HeadNode == null)
+            {
+                HeadNode = node;
+            }
+            else
+            {
+                var queue = new Queue<Node>();
+                queue.Enqueue(HeadNode);
+                while (queue.Any())
                 {
-                    Value = CurrentValue ?? 5,
-                    IsExpanded = true,
-                    IsSelected = true
-                };
-            AddNode(newNode);
+                    var current = queue.Dequeue();
+                    if (current.LeftNode == null)
+                    {
+                        current.LeftNode = node;
+                        break;
+                    }
+                    else if (current.RightNode == null)
+                    {
+                        current.RightNode = node;
+                        break;
+                    }
+                    else
+                    {
+                        queue.Enqueue(current.LeftNode);
+                        queue.Enqueue(current.RightNode);
+                    }
+                }
+            }
         }
 
         public bool Contains(Node node)
@@ -249,7 +360,7 @@ namespace MvvmBinaryViewModel
             return new Tuple<Node, Node>(currentNode, parent);
         }
 
-        public void AddNode(Node node)
+        public void AddSearchNode(Node node)
         {
             if (HeadNode == null)
             {
@@ -257,7 +368,7 @@ namespace MvvmBinaryViewModel
             }
             else
             {
-                HeadNode.AddNode(node);
+                HeadNode.AddBinarySearchNode(node);
             }
         }
 

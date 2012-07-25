@@ -121,7 +121,7 @@ namespace MvvmBinaryModel
         #endregion
 
         #region functions
-        public void AddNode(Node node)
+        public void AddBinarySearchNode(Node node)
         {
             if (Value <= node.Value)
             {
@@ -131,7 +131,7 @@ namespace MvvmBinaryModel
                 }
                 else
                 {
-                    RightNode.AddNode(node);
+                    RightNode.AddBinarySearchNode(node);
                 }
             }
             else
@@ -142,7 +142,7 @@ namespace MvvmBinaryModel
                 }
                 else
                 {
-                    LeftNode.AddNode(node);
+                    LeftNode.AddBinarySearchNode(node);
                 }
             }
         }

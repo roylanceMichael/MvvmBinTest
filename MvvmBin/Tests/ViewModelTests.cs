@@ -34,12 +34,12 @@ namespace Tests
             public void CorrectOrderWhenTwoEntered()
             {
                 var viewModel = new BinaryTree();
-                viewModel.AddNode(new Node
+                viewModel.AddSearchNode(new Node
                 {
                     Value = 5
                 });
 
-                viewModel.AddNode(new Node
+                viewModel.AddSearchNode(new Node
                 {
                     Value = 10
                 });
@@ -51,12 +51,12 @@ namespace Tests
             public void CorrectOrderWhenTwoEnteredLargeSmall()
             {
                 var viewModel = new BinaryTree();
-                viewModel.AddNode(new Node
+                viewModel.AddSearchNode(new Node
                 {
                     Value = 10
                 });
 
-                viewModel.AddNode(new Node
+                viewModel.AddSearchNode(new Node
                 {
                     Value = 5
                 });
@@ -87,7 +87,7 @@ namespace Tests
                 */
                 var viewModel = new BinaryTree();
 
-                viewModel.AddNode(new Node
+                viewModel.AddSearchNode(new Node
                 {
                     Value = 10
                 });
@@ -97,19 +97,19 @@ namespace Tests
                         Value = 5
                     };
 
-                viewModel.AddNode(node);
+                viewModel.AddSearchNode(node);
 
-                viewModel.AddNode(new Node
+                viewModel.AddSearchNode(new Node
                 {
                     Value = 4
                 });
 
-                viewModel.AddNode(new Node
+                viewModel.AddSearchNode(new Node
                 {
                     Value = 6
                 });
 
-                viewModel.AddNode(new Node
+                viewModel.AddSearchNode(new Node
                 {
                     Value = 2
                 });
@@ -151,7 +151,7 @@ namespace Tests
                     new Node{Value = 7, IsExpanded = true},
                     new Node{Value = 8, IsExpanded = true},
                 };
-                rightChildHasNoLeft.ForEach(vm.AddNode);
+                rightChildHasNoLeft.ForEach(vm.AddSearchNode);
                 var sixthNode = rightChildHasNoLeft.First(t => t.Value == 6);
                 //act
                 vm.RemoveNodeEntrance(sixthNode);
@@ -175,7 +175,7 @@ namespace Tests
                     new Node{Value = 8, IsExpanded = true},
                     new Node{Value = 7, IsExpanded = true},
                 };
-                rightChildHasNoLeft.ForEach(vm.AddNode);
+                rightChildHasNoLeft.ForEach(vm.AddSearchNode);
                 var sixthNode = rightChildHasNoLeft.First(t => t.Value == 6);
                 //act
                 vm.RemoveNodeEntrance(sixthNode);
@@ -199,6 +199,56 @@ namespace Tests
                 vm.AddDefaultTreeCommand.Execute(null);
                 //assert
                 Assert.IsTrue(vm.Contains(BinaryTree.NodeList[1]));
+            }
+        }
+
+        [TestClass]
+        public class ValidateSearchTree
+        {
+            [TestMethod]
+            public void SuccessWhenHeadNodeInserted()
+            {
+                var vm = new BinaryTree();
+                var list = BinaryTree.NodeList;
+                vm.AddBalancedNode(list[0]);
+                Assert.IsTrue(vm.HeadNode == list[0]);
+            }
+
+            [TestMethod]
+            public void SuccessWhenFiveInserted()
+            {
+                var vm = new BinaryTree();
+                var list = BinaryTree.NodeList;
+                for (var i = 0; i < 6; i++)
+                {
+                    vm.AddBalancedNode(list[i]);
+                }
+
+                Assert.IsTrue(vm.HeadNode == list[0]);
+                Assert.IsTrue(vm.HeadNode.LeftNode == list[1]);
+                Assert.IsTrue(vm.HeadNode.RightNode == list[2]);
+                Assert.IsTrue(vm.HeadNode.LeftNode.LeftNode == list[3]);
+                Assert.IsTrue(vm.HeadNode.LeftNode.RightNode == list[4]);
+            }
+
+            [TestMethod]
+            public void FailureWhenNotBinarySearchTree()
+            {
+                var vm = new BinaryTree();
+                var list = BinaryTree.NodeList;
+                for (var i = 0; i < 6; i++)
+                {
+                    vm.AddBalancedNode(list[i]);
+                }
+                Assert.IsFalse(vm.IsThisBinaryTree());
+            }
+
+            [TestMethod]
+            public void SuccessWhenBinarySearchTree()
+            {
+                var vm = new BinaryTree();
+                vm.AddDefaultTreeEntrance(null);
+                Assert.IsTrue(vm.IsThisBinaryTree());
             }
         }
     }
