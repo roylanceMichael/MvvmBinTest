@@ -1,10 +1,126 @@
 ﻿<Window x:Class="MvvmBinary.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:MvvmBinaryViewModel="clr-namespace:MvvmBinaryViewModel;assembly=MvvmBinaryViewModel"
+        Title="Binary Tree" 
+        Height="768" 
+        Width="1024"
+        WindowStartupLocation="CenterScreen"
+        Icon="./icons/binary-tree-icon.png">
+    <Window.DataContext>
+        <MvvmBinaryViewModel:BinaryTree />
+    </Window.DataContext>
     <Grid>
-        <TreeView ItemsSource="{Binding HeadNode}">
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBox Margin="5" Height="24" Grid.Column="0" Text="{Binding CurrentValue}" Width="100" />
+        <Button Grid.Column="1" Command="{Binding AddNodeCommand}" >
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Cursor="Hand" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label VerticalAlignment="Center" Content="Add Node:" HorizontalAlignment="Right" />
+                        <Image RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Center" Grid.Column="1" Height="30" Width="30" HorizontalAlignment="Left" Name="Normal" Source="./icons/add.png"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Normal" Property="Opacity" Value="50"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Normal" Property="Opacity" Value="10"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Grid.Column="2" HorizontalAlignment="Left" Command="{Binding RemoveNodeCommand}" CommandParameter="{Binding ElementName=BinaryTreeControl, Path=SelectedItem}" >
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Cursor="Hand" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label VerticalAlignment="Center" Content="Remove Node:" HorizontalAlignment="Right" />
+                        <Image RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Center" Grid.Column="1" Height="30" Width="30" Name="Normal" Source="./icons/delete.png"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Normal" Property="Opacity" Value="50"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Normal" Property="Opacity" Value="10"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Grid.Column="3" HorizontalAlignment="Left" Command="{Binding AddDefaultTreeCommand}">
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Cursor="Hand" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label VerticalAlignment="Center" Content="Add Default Tree:" HorizontalAlignment="Right" />
+                        <Image RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Center" Grid.Column="1" Height="30" Width="30" Name="Normal" Source="./icons/heart.png"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Normal" Property="Opacity" Value="50"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Normal" Property="Opacity" Value="10"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <TreeView Grid.Row="1" Grid.ColumnSpan="6" ItemsSource="{Binding HeadNodeList}" x:Name="BinaryTreeControl">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Style.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="Black" />
+                    </Style.Resources>
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <Label Cursor="Hand">
+                        <Label.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Label}" />
+                                <TextBlock Text=" " />
+                                <TextBlock Text="{Binding Value}" />
+                            </StackPanel>
+                        </Label.Content>
+                    </Label>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
         </TreeView>
     </Grid>
 </Window>

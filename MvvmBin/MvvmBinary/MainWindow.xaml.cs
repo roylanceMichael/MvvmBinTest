@@ -24,7 +24,6 @@ namespace MvvmBinary
         public MainWindow()
         {
             InitializeComponent();
-            var viewModel = new ViewModel();
         }
     }
 }

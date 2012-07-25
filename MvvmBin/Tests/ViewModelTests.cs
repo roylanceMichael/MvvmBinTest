@@ -14,7 +14,7 @@ namespace Tests
             [TestMethod]
             public void NotNullWhenAddNode()
             {
-                var viewModel = new ViewModel();
+                var viewModel = new BinaryTree();
                 viewModel.AddNode(new Node
                 {
                     Value = 5
@@ -25,7 +25,7 @@ namespace Tests
             [TestMethod]
             public void CorrectOrderWhenTwoEntered()
             {
-                var viewModel = new ViewModel();
+                var viewModel = new BinaryTree();
                 viewModel.AddNode(new Node
                 {
                     Value = 5
@@ -42,7 +42,7 @@ namespace Tests
             [TestMethod]
             public void CorrectOrderWhenTwoEnteredLargeSmall()
             {
-                var viewModel = new ViewModel();
+                var viewModel = new BinaryTree();
                 viewModel.AddNode(new Node
                 {
                     Value = 10
@@ -77,7 +77,7 @@ namespace Tests
                  4
                 2  6 
                 */
-                var viewModel = new ViewModel();
+                var viewModel = new BinaryTree();
                 
                 viewModel.AddNode(new Node
                 {

@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -81,7 +82,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -98,6 +99,44 @@
       <Project>{d2350873-67e0-4875-828f-21848f237ebd}</Project>
       <Name>MvvmBinaryViewModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\add.png" />
+    <Resource Include="icons\back.png" />
+    <Resource Include="icons\basecircle.png" />
+    <Resource Include="icons\camera.png" />
+    <Resource Include="icons\cancel.png" />
+    <Resource Include="icons\check.png" />
+    <Resource Include="icons\delete.png" />
+    <Resource Include="icons\download.png" />
+    <Resource Include="icons\edit.png" />
+    <Resource Include="icons\favs.addto.png" />
+    <Resource Include="icons\favs.png" />
+    <Resource Include="icons\ff.png" />
+    <Resource Include="icons\flag.png" />
+    <Resource Include="icons\folder.png" />
+    <Resource Include="icons\heart.png" />
+    <Resource Include="icons\i.png" />
+    <Resource Include="icons\mail.png" />
+    <Resource Include="icons\minus.png" />
+    <Resource Include="icons\next.png" />
+    <Resource Include="icons\overflowdots.png" />
+    <Resource Include="icons\parent.png" />
+    <Resource Include="icons\pause.png" />
+    <Resource Include="icons\phone.png" />
+    <Resource Include="icons\play.png" />
+    <Resource Include="icons\questionmark.png" />
+    <Resource Include="icons\refresh.png" />
+    <Resource Include="icons\rew.png" />
+    <Resource Include="icons\save.png" />
+    <Resource Include="icons\search.png" />
+    <Resource Include="icons\settings.png" />
+    <Resource Include="icons\share.png" />
+    <Resource Include="icons\upload.png" />
+    <Resource Include="icons\video.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\binary-tree-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
